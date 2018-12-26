@@ -1,6 +1,6 @@
 from sanic import Sanic, response
 from sanic.log import logger
-from wechatapi import init, bp
+from wechatapi import fetch_token
 import yaml
 import aiohttp
 import asyncio
@@ -16,8 +16,8 @@ async def main():
         'redis://localhost', loop=loop,
         encoding='utf8'
     )
-    async with aiohttp.ClientSession(loop) as session:
-        print(await token(config, rdsclient, session, logger))
+    async with aiohttp.ClientSession() as session:
+        print(await fetch_token(config, rdsclient, session, logger))
 
     rdsclient.close()
     await rdsclient.wait_closed()

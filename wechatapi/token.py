@@ -1,7 +1,7 @@
 import aiohttp
 import aioredis
 
-async def token(config, rdsclient, session, logger):
+async def fetch_token(config, rdsclient, session, logger):
     url = 'https://api.weixin.qq.com/cgi-bin/token'
     params = {
         'grant_type': 'client_credential',

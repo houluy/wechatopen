@@ -1,7 +1,4 @@
-from .first_access import __init__, bp
-from .token import access
+#from .first_access import __init__, bp
+from .token import fetch_token
 
-def init(config):
-    __init__(config)
-    return access(config)
 
