@@ -68,7 +68,6 @@ class UploadGeo(EventHandler):
     def handle(self, params, message):
         pprint(message)#.get('Latitude'), message.get('Longitude'), message.get('Precision'))
 
-
 @dispatch('text')
 class TextHandler(BaseHandler):
     def _respond(self, params, message):

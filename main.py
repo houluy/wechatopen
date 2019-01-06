@@ -11,4 +11,3 @@ app.conf = config.get('app')
 loop = asyncio.get_event_loop()
 
 app.run(**config.get('server'), debug=True, loop=loop)
-
