@@ -1,6 +1,4 @@
-#from .first_access import __init__, bp
-from .token import fetch_token
-from .ips import fetch_IP
+from .req import get, post, store_token
 from .event.handler import *
 from sanic import Sanic, response
 from sanic.log import logger
@@ -44,7 +42,7 @@ async def verification(request):
 # Token middleware
 @app.middleware('request')
 async def token(request):
-    access_token = await fetch_token(request.app.conf, request.app.redis, request.app.session, logger)
+    access_token = await store_token(request.app.conf, request.app.redis, request.app.session, logger, get)
     request.app.access_token = access_token
 
 @app.route('/wechatapi', methods=['GET',])
@@ -68,6 +66,7 @@ async def message(request):
     message = xmltodict.parse(request.body.decode())
     message = message.get('xml')
     msgtype = message.get('MsgType')
-    print(message)
+    openid = message.get('FromUserName')
+    print(await get('uinfo', request.app.session, logger, request.app.access_token, { 'openid': openid }))
     return response.raw(registry.get(msgtype)(params, message))
 

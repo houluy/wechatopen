@@ -1,5 +1,7 @@
 import unittest
 from database.test_redis import *
 from message.test_xml import *
+from openapi.test_get import *
 
-unittest.main()
+if __name__ == '__main__':
+    unittest.main()

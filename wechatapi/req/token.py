@@ -1,19 +1,16 @@
 import aiohttp
 import aioredis
 
-async def fetch_token(config, rdsclient, session, logger):
-    url = 'https://api.weixin.qq.com/cgi-bin/token'
-    params = {
-        'grant_type': 'client_credential',
-        'appid': config.get('appID'),
-        'secret': config.get('appsecret'),
-    }
+async def store_token(config, rdsclient, session, logger, get):
     key = 'token'
     access_token = await rdsclient.get(key)
     if access_token is None:
         # Refresh token
-        async with session.get(url, params=params) as resp:
-            res = await resp.json()
+        params = {
+            'appid': config.get('appID'),
+            'secret': config.get('appsecret'),
+        }
+        res = await get('token', session, logger, token='', extra_params=params)
         access_token = res.get('access_token')
         tr = rdsclient.multi_exec()
         tr.set(key, access_token)
