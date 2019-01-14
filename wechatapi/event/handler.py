@@ -58,6 +58,12 @@ class Unsubscription(EventHandler):
         text = 'GoodBye'
         return super()._respond(params, message, text)
 
+@EventHandler.subdispatch('CLICK')
+class Click(EventHandler):
+    def _respond(self, params, message):
+        text = 'Test for menu'
+        return super()._respond(params, message, text)
+
 @dispatch('location')
 class UploadGeo(EventHandler):
     def _respond(self, params, message):

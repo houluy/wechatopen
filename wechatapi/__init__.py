@@ -3,6 +3,7 @@ from .event.handler import *
 from sanic import Sanic, response
 from sanic.log import logger
 from .event.handler import registry
+from .init import menu
 import xmltodict
 import time
 import json
@@ -44,6 +45,7 @@ async def verification(request):
 async def token(request):
     access_token = await store_token(request.app.conf, request.app.redis, request.app.session, logger, get)
     request.app.access_token = access_token
+    await menu.setupmenu(request.app.session, logger, access_token)
 
 @app.route('/wechatapi', methods=['GET',])
 async def test(request):
@@ -67,6 +69,5 @@ async def message(request):
     message = message.get('xml')
     msgtype = message.get('MsgType')
     openid = message.get('FromUserName')
-    print(await get('uinfo', request.app.session, logger, request.app.access_token, { 'openid': openid }))
     return response.raw(registry.get(msgtype)(params, message))
 

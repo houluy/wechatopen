@@ -1,6 +1,7 @@
 import aiohttp
 import urllib.parse as up
 from .token import store_token
+import json
 
 __all__ = ['get', 'post', 'store_token']
 
@@ -41,6 +42,17 @@ _openapi = {
             'end_date': '',
         },
     },
+    'menu': {
+        'endpoint': 'cgi-bin/menu/create',
+    },
+    'material': {
+        'endpoint': 'cgi-bin/material/batchget_material',
+        'data': {
+            "type": '',
+            "offset": '',
+            "count": '',
+        }
+    },
 }
 
 def _fix_data(apiname, token, extra_params=None, data=None):
@@ -72,6 +84,9 @@ async def get(apiname, session, logger, token, extra_params=None):
 
 async def post(apiname, session, logger, token, data, extra_params=None):
     url, params, data = _fix_data(apiname, token, extra_params, data)
-    async with session.post(url, params=params, data=data) as resp:
-        res = await resp.json()
+    async with session.post(url, params=params, data=json.dumps(data, ensure_ascii=False).encode('utf8')) as resp:
+        try:
+            res = await resp.json()
+        except aiohttp.client_exceptions.ContentTypeError:
+            res = await resp.text()
     return res

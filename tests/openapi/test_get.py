@@ -64,6 +64,43 @@ class TestOpenApi(unittest.TestCase):
             self.assertTrue('list' in res)
         self.loop.run_until_complete(ucumulate())
 
+    @unittest.skip('Customized menu')
+    def test_menu(self):
+        async def menu():
+            data = {
+                'button': [
+                    {
+                        'type': 'click',
+                        'name': '测试',
+                        'key': 'testmenu1',
+                    },
+                    {
+                        'type': 'click',
+                        'name': '测试2',
+                        'key': 'testmenu2',
+                    },
+                    {
+                        'type': 'click',
+                        'name': '测试3',
+                        'key': 'testmenu3',
+                    },
+                ],
+            }
+            res = await req.post('menu', self.session, None, self.token, data=data)
+            self.assertEqual(res['errcode'], 0)
+        self.loop.run_until_complete(menu())
+
+    def test_getmaterial(self):
+        async def material():
+            data = {
+                'type': 'news',
+                'offset': 0,
+                'count': 20,
+            }
+            res = await req.post('material', self.session, None, self.token, data=data)
+            print(res)
+        self.loop.run_until_complete(material())
+
     def tearDown(self):
         async def asyncteardown():
             self.redis.close()
