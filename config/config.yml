@@ -1,8 +1,0 @@
-app:
-    appID: wxfd9d573162c4d085
-    appsecret: 7a73b7351a3ffaa91dc62f36f715b60d
-    token: lucima1468
-server:
-    host: 0.0.0.0
-    port: 80
-

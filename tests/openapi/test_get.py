@@ -16,8 +16,10 @@ class TestOpenApi(unittest.TestCase):
             )
             self.session = aiohttp.ClientSession(loop=self.loop)
             self.token_params = {
-                'appid': 'wxfd9d573162c4d085',
-                'secret': '7a73b7351a3ffaa91dc62f36f715b60d',
+                #'appid': 'wxfd9d573162c4d085',
+                #'secret': '7a73b7351a3ffaa91dc62f36f715b60d',
+                'appid': 'wxb310e7246db43407',
+                'secret': '7d183cd8402826fe432287d60bd03b2f',
             }
             self.token = (await req.get('token', self.session, None, '', self.token_params)).get('access_token')
         self.loop.run_until_complete(asyncsetup())
@@ -95,7 +97,7 @@ class TestOpenApi(unittest.TestCase):
             data = {
                 'type': 'news',
                 'offset': 0,
-                'count': 20,
+                'count': 1,
             }
             res = await req.post('material', self.session, None, self.token, data=data)
             print(res)

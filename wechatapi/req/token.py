@@ -10,7 +10,7 @@ async def store_token(config, rdsclient, session, logger, get):
             'appid': config.get('appID'),
             'secret': config.get('appsecret'),
         }
-        res = await get('token', session, logger, token='', extra_params=params)
+        res = await get('token', session, token='', extra_params=params)
         access_token = res.get('access_token')
         tr = rdsclient.multi_exec()
         tr.set(key, access_token)

@@ -76,13 +76,13 @@ def _fix_data(apiname, token, extra_params=None, data=None):
     }
     return url, params, data
 
-async def get(apiname, session, logger, token, extra_params=None):
+async def get(apiname, session, token, extra_params=None):
     url, params, _ = _fix_data(apiname, token, extra_params)
     async with session.get(url, params=params) as resp:
         res = await resp.json()
     return res
 
-async def post(apiname, session, logger, token, data, extra_params=None):
+async def post(apiname, session, token, data, extra_params=None):
     url, params, data = _fix_data(apiname, token, extra_params, data)
     async with session.post(url, params=params, data=json.dumps(data, ensure_ascii=False).encode('utf8')) as resp:
         try:
