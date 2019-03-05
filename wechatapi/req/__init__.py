@@ -45,7 +45,10 @@ _openapi = {
     'menu': {
         'endpoint': 'cgi-bin/menu/create',
     },
-    'material': {
+    'materialcount': {
+        'endpoint': 'cgi-bin/material/get_materialcount',
+    },
+    'batchmaterial': {
         'endpoint': 'cgi-bin/material/batchget_material',
         'data': {
             "type": '',

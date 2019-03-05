@@ -27,7 +27,7 @@ class Mdreparser:
 
     @Pipe
     def parse_hl(self, content):
-        self.content['headline'][1] = self.r_hl1.findall(content)
+        self.content['title'] = self.r_hl1.findall(content)
         content = self.r_hl1.sub('', content)
         ihls = self.r_hls.finditer(content)
         hls = defaultdict(list)

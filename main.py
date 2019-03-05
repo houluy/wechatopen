@@ -24,7 +24,7 @@ async def get_news():
         'offset': 0,
         'count': 1,
     }
-    res = await post('material', session, token, data)
+    res = await post('batchmaterial', session, token, data)
     await session.close()
     res = json.loads(res)
     res_list = res['item']

@@ -1,24 +1,16 @@
-from wechatapi.req import post
-
-async def get_news(count, offset, loop, session, token):
+async def get_news(count, offset, post):
     data = {
         'type': 'news',
         'offset': offset,
         'count': count,
     }
-    res = await post('material', session, token, data)
+    res = await post('batchmaterial', data)
     res = json.loads(res)
-    ret = {}
-    for key, value in res.items():
-        if key == 'item':
-            ret[key] = []
-            for item in value:
-                for k, v in item.items():
-                    if k == 'content':
-                        continue
+    for elem in res['item']:
+        for news in elem['content']['news_item']:
+            news.pop('content')
+    return res
 
-        else:
-            print(key, value)
-
-
+async def get_materialcount(get):
+    return await get('materialcount').get('news_count')
 
